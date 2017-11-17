@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Bean （User) 必须具备无参构造方法  -->
+    <!-- spring 采用无参构造创建对象实例 -->
+    <bean id="user" class="com.music.bean.User"></bean>
+
+    <!-- 使用静态工厂方法获取对象 -->
+    <bean id="staticuser" class="com.music.factory.StaticFactory" factory-method="staticGetUser"></bean>
+    
+    <!-- 使用实例工厂方法获取对象 -->
+    <bean id="instanceFactory" class="com.music.factory.InstanceFactory"></bean>
+    <bean id="instanceuser" factory-bean="instanceFactory" factory-method="instanceGetUser"></bean>
+</beans>
