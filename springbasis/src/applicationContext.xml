@@ -1,17 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 基于配置的对象注入
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
     xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"> -->
 
+
+	<!-- ** 注：bean 都有默认值:
+	SCOPE
+	属性值：
+		singleton 单实例   默认  eg:
+		<bean id="user" class="com.music.bean.User"></bean>
+		<bean id="user" class="com.music.bean.User" scope="singleton"></bean>
+		效果一样。获得的两个（实际是一个对象）,地址一致。
+		
+		prototype 多实例
+		
+		request
+		session
+		globalSession -->
+
+
+
+    <!-- spring 采用无参构造创建对象实例  (Spring 采用的) -->
     <!-- Bean （User) 必须具备无参构造方法  -->
-    <!-- spring 采用无参构造创建对象实例 -->
-    <bean id="user" class="com.music.bean.User"></bean>
-
+<!--     <bean id="user" class="com.music.bean.User"></bean>
+ -->
     <!-- 使用静态工厂方法获取对象 -->
-    <bean id="staticuser" class="com.music.factory.StaticFactory" factory-method="staticGetUser"></bean>
+<!--     <bean id="staticuser" class="com.music.factory.StaticFactory" factory-method="staticGetUser"></bean>
     
-    <!-- 使用实例工厂方法获取对象 -->
+    使用实例工厂方法获取对象
     <bean id="instanceFactory" class="com.music.factory.InstanceFactory"></bean>
-    <bean id="instanceuser" factory-bean="instanceFactory" factory-method="instanceGetUser"></bean>
-</beans>
+    <bean id="instanceuser" factory-bean="instanceFactory" factory-method="instanceGetUser"></bean> -->
+    
+    <!-- 属性注入，场景可以参见Controller 中注入 Service; 在Service 中
+    注入Dao 
+    ** 意味着，不仅仅能注入字符串，而是可以注入多种类型，甚至
+    ** 注入另一个类的对象。-->
+    
+    <!-- 使用有参构造方法实现对象的属性注入  -->
+<!--     <bean id="propertietest" class="com.music.test.PropertiesTest">
+    	<constructor-arg name="testPropertie" value="yoo"></constructor-arg>
+    </bean> -->
+    
+    <!-- 使用set方法实现对象的属性注入 -->
+<!--     <bean id="userproperty" class="com.music.bean.User">
+    	<property name="password" value="aaaa"></property>
+    </bean> -->
+    
+    <!-- 还有一种属性注入方式：接口注入，通过实现接口，接口又包含属性set方法
+    实现属性注入 -->
+    
+<!--     像service 中注入dao  : 在类中注入对象
+    <bean id="userservice" class="com.music.service.UserService">
+    	<property name="user" ref="userproperty"></property>
+    </bean> -->
+    
+    <!-- 了解：名称空间注入 -->
+    <!-- 要会用：复杂类型属性注入 -->
+<!-- </beans> -->
+
+<!-- 基于注解的注入 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+        
+        <!-- 开启注解扫描 , 到保留扫描类、方法、属性是否被注解标记 -->
+        
+       	<context:component-scan base-package="com.music"></context:component-scan>
+       	
+       	<!-- 只扫描标记的属性 -->
+<!--        	<context:annotation-config></context:annotation-config>
+ -->
+ </beans>
